@@ -1,0 +1,26 @@
+﻿@model _25DH110083_My_Store.Models.Customer
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 class="bg-success">XÓA KHÁCH HÀNG</h2>
+<h4 class="alert-danger">Bạn thực sự muốn xóa khách hàng này à?</h4>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="control-label col-md-2">Tên</div>
+            <div class="col-md-10">@Html.DisplayFor(m => m.CustomerName)</div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Xóa" class="btn btn-primary" />
+                @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-primary" })
+            </div>
+        </div>
+    </div>
+}

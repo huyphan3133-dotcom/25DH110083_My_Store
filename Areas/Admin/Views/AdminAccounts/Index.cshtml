@@ -1,0 +1,50 @@
+﻿@model PagedList.IPagedList<_25DH110083_My_Store.Models.AdminAccount>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 class="bg-success">DANH SÁCH TÀI KHOẢN ADMIN</h2>
+
+@using (Html.BeginForm("Index", "AdminAccounts", FormMethod.Get))
+{
+    <p>
+        Tìm tài khoản: @Html.TextBox("searchString", ViewBag.SearchString as string)
+        <input type="submit" value="Tìm" class="btn btn-primary btn-sm" />
+    </p>
+}
+
+<table class="table bg-info">
+    <tr class="bg-success">
+        <th>Tên đăng nhập</th>
+        <th>Email</th>
+        <th>Quyền hạn</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(m => item.AdminName)</td>
+            <td>@Html.DisplayFor(m => item.AdminEmail)</td>
+            <td>@Html.DisplayFor(m => item.AdminRole)</td>
+            <td>
+                @Html.ActionLink("Sửa", "Edit", new { id = item.AdminID }, new { @class = "btn btn-primary btn-sm" })
+                @Html.ActionLink("Xóa", "Delete", new { id = item.AdminID }, new { @class = "btn btn-danger btn-sm" })
+            </td>
+        </tr>
+    }
+</table>
+
+<br />
+Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, searchString = ViewBag.SearchString }))
+
+<p>
+    @Html.ActionLink("Thêm mới", "Create", null, new { @class = "btn btn-primary" })
+</p>
+

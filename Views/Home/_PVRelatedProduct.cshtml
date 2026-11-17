@@ -1,0 +1,24 @@
+﻿@model _25DH110083_My_Store.Models.ViewModel.ProductDetailsVM
+
+@if (Model.RelatedProducts != null && Model.RelatedProducts.Any())
+{
+    <section class="container-fluid featureProd">
+        <h4 style="font-weight:bold;">Sản phẩm tương tự</h4>
+        <div class="feature-container">
+            @foreach (var product in Model.RelatedProducts)
+            {
+                <div class="fproduct-item">
+                    <div>
+                        <a href="@Url.Action("ProductDetails", "Home", new { id = product.ProductID })">
+                            <img src="@Url.Content(string.IsNullOrEmpty(product.ProductImage) ? "~/Content/images/default_img.jpg" : product.ProductImage)" alt="@product.ProductName" />
+                        </a>
+                    </div>
+                    <div>
+                        <p class="prodName">@product.ProductName</p>
+                        <p class="prodPrice">@product.ProductPrice.ToString("N0") đ</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+}

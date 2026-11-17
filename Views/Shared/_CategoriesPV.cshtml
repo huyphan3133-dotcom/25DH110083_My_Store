@@ -1,0 +1,20 @@
+﻿@model IEnumerable<_25DH110083_My_Store.Models.Category>
+
+<!-- Menu Category: hiển thị danh sách danh mục sản phẩm dưới dạng menu -->
+<ul class="nav navbar-nav">
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            Danh mục <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            @foreach (var item in Model)
+            {
+                <li>
+                    <a href="@Url.Action("ProductList", "Home", new { id = item.CategoryID })">
+                        @item.CategoryName
+                    </a>
+                </li>
+            }
+        </ul>
+    </li>
+</ul>

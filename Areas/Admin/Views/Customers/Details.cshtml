@@ -1,0 +1,52 @@
+﻿@model _25DH110083_My_Store.Models.Customer
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var orders = ViewBag.Orders as List<_25DH110083_My_Store.Models.Order>;
+}
+
+<h2 class="bg-success">CHI TIẾT KHÁCH HÀNG</h2>
+
+<dl class="dl-horizontal">
+    <dt>Tên</dt>
+    <dd>@Model.CustomerName</dd>
+    <dt>Email</dt>
+    <dd>@Model.CustomerEmail</dd>
+    <dt>Điện thoại</dt>
+    <dd>@Model.CustomerPhone</dd>
+    <dt>Địa chỉ</dt>
+    <dd>@Model.CustomerAddress</dd>
+</dl>
+
+<h3>ĐƠN HÀNG CỦA KHÁCH HÀNG</h3>
+<table class="table bg-info">
+    <tr class="bg-success">
+        <th>Mã đơn</th>
+        <th>Ngày đặt</th>
+        <th>Tổng tiền</th>
+        <th>Trạng thái</th>
+        <th></th>
+    </tr>
+    @if (orders != null)
+    {
+        foreach (var o in orders)
+        {
+            <tr>
+                <td>@o.OrderID</td>
+                <td>@o.OrderDate.ToString("dd/MM/yyyy")</td>
+                <td>@o.TotalAmount</td>
+                <td>@o.OrderStatus</td>
+                <td>
+                    @Html.ActionLink("Chi tiết đơn", "Details", "Orders",
+                        new { id = o.OrderID, area = "Admin" },
+                        new { @class = "btn btn-primary btn-sm" })
+                </td>
+            </tr>
+        }
+    }
+</table>
+
+<p>
+    @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-primary" })
+</p></p>

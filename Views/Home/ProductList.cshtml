@@ -1,0 +1,46 @@
+﻿@model PagedList.IPagedList<_25DH110083_My_Store.Models.Product>
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Danh sách sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" type="text/css" href="~/Content/myStyle/CustomerHome.css" />
+
+<section class="container-fluid listProduct">
+    <h2>Danh mục: @ViewBag.CategoryName</h2>
+
+    @if (Model.Any())
+    {
+        <ul class="list-container">
+            @foreach (var product in Model)
+            {
+                <li class="lproduct-item">
+                    <div>
+                        <a href="@Url.Action("ProductDetails", "Home", new { id = product.ProductID })">
+                            <img src="@Url.Content(string.IsNullOrEmpty(product.ProductImage) ? "~/Content/images/default_img.jpg" : product.ProductImage)" alt="@product.ProductName" />
+                        </a>
+                    </div>
+                    <div>
+                        <p class="prodPrice">@product.ProductPrice.ToString("N0") đ</p>
+                        <p class="prodName">@product.ProductName</p>
+                        <p class="prodCate">@product.Category.CategoryName</p>
+                        <p class="prodSale">Đã bán: @product.OrderDetails.Count</p>
+                    </div>
+                </li>
+            }
+        </ul>
+
+        <div class="pagination-container">
+            @Html.PagedListPager(Model, page => Url.Action("ProductList", "Home", new
+            {
+                id = ViewBag.CategoryID,
+                page
+            }))
+        </div>
+    }
+    else
+    {
+        <p>Danh mục này chưa có sản phẩm.</p>
+    }
+</section>

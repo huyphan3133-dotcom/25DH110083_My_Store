@@ -1,0 +1,87 @@
+﻿
+@model IEnumerable<_25DH110083_My_Store.Models.Order>
+@{
+    ViewBag.Title = "Trang chủ Admin";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 class="bg-success">TỔNG QUAN HỆ THỐNG</h2>
+
+<!-- Các thẻ thống kê -->
+<div class="row text-center" style="margin-bottom: 30px;">
+    <div class="col-md-3">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <a href="@Url.Action("Index", "Products", new { area = "Admin" })">Sản phẩm</a>
+            </div>
+            <div class="panel-body">
+                <h2>@ViewBag.TotalProducts</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="panel panel-info">
+            <div class="panel-heading"><a href="@Url.Action("Index", "Categories", new { area = "Admin" })">Danh mục </a></div>
+            <div class="panel-body">
+                <h2>@ViewBag.TotalCategories</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="panel panel-warning">
+            <div class="panel-heading"><a href="@Url.Action("Index", "Customers", new { area = "Admin" })">Khách hàng</a></div>
+            <div class="panel-body">
+                <h2>@ViewBag.TotalCustomers</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="panel panel-success">
+            <div class="panel-heading"><a href="@Url.Action("Index", "Orders", new { area = "Admin" })">Đơn hàng</a></div>
+            <div class="panel-body">
+                <h2>@ViewBag.TotalOrders</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Doanh thu -->
+<div class="alert alert-danger text-center">
+    <h3>TỔNG DOANH THU: <strong>@ViewBag.TotalRevenue.ToString("N0") VNĐ</strong></h3>
+</div>
+
+<!-- 5 đơn hàng mới nhất -->
+<h4 class="bg-info">5 ĐƠN HÀNG MỚI NHẤT</h4>
+<table class="table table-bordered table-striped">
+    <tr class="bg-success">
+        <th>Mã đơn</th>
+        <th>Khách hàng</th>
+        <th>Ngày đặt</th>
+        <th>Tổng tiền</th>
+        <th>Trạng thái</th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>#@item.OrderID</td>
+            <td>@(item.Customer != null ? item.Customer.CustomerName : "N/A")</td>
+            <td>@item.OrderDate.ToString("dd/MM/yyyy HH:mm")</td>
+            <td>@item.TotalAmount.ToString("N0") VNĐ</td>
+            <td>
+                @if (item.OrderStatus == "Đã giao")
+                {
+                    <span class="label label-success">@item.OrderStatus</span>
+                }
+                else
+                {
+                    <span class="label label-warning">@item.OrderStatus</span>
+                }
+            </td>
+            <td>
+                @Html.ActionLink("Chi tiết", "Details", "Orders", new { id = item.OrderID, area = "Admin" }, new { @class = "btn btn-primary btn-sm" })
+            </td>
+        </tr>
+    }
+</table>
+

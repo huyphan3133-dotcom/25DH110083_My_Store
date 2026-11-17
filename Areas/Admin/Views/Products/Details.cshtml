@@ -1,0 +1,35 @@
+﻿@model _25DH110083_My_Store.Models.Product
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 class="bg-success">CHI TIẾT SẢN PHẨM</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Tên sản phẩm</dt>
+        <dd>@Html.DisplayFor(m => m.ProductName)</dd>
+
+        <dt>Hình</dt>
+        <dd><img src="@Url.Content(string.IsNullOrEmpty(Model.ProductImage) ? "~/Content/images/default_img.jpg" : Model.ProductImage)" width="150" /></dd>
+
+        <dt>Danh mục</dt>
+        <dd>@Html.DisplayFor(m => m.Category.CategoryName)</dd>
+
+        <dt>Giá</dt>
+        <dd>@Html.DisplayFor(m => m.ProductPrice)</dd>
+
+        <dt>Tồn kho</dt>
+        <dd>@Html.DisplayFor(m => m.StockQuantity)</dd>
+
+        <dt>Mô tả</dt>
+        <dd>@Html.DisplayFor(m => m.ProductDescription)</dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Sửa", "Edit", new { id = Model.ProductID }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-primary" })
+</p>

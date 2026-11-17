@@ -1,0 +1,157 @@
+﻿@model _25DH110083_My_Store.Models.ViewModel.ProfileVM
+@{
+    ViewBag.Title = "Thông tin tài khoản";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Thông tin tài khoản</h2>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">@TempData["Message"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<!-- ===== Phần Thông tin cá nhân (hiển thị) ===== -->
+<div class="panel panel-default">
+    <div class="panel-heading"><strong>Thông tin cá nhân</strong></div>
+    <div class="panel-body">
+        <dl class="dl-horizontal">
+            <dt>Tên đăng nhập</dt>
+            <dd>@Model.Username</dd>
+            <dt>Họ tên</dt>
+            <dd>@Model.CustomerName</dd>
+            <dt>Số điện thoại</dt>
+            <dd>@Model.CustomerPhone</dd>
+            <dt>Email</dt>
+            <dd>@Model.CustomerEmail</dd>
+            <dt>Địa chỉ</dt>
+            <dd>@Model.CustomerAddress</dd>
+        </dl>
+    </div>
+</div>
+
+<!-- ===== Phần Thay đổi thông tin: cập nhật SĐT, Email, Địa chỉ ===== -->
+<div class="panel panel-default">
+    <div class="panel-heading"><strong>Cập nhật thông tin</strong></div>
+    <div class="panel-body">
+        @using (Html.BeginForm("UpdateProfile", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.CustomerName, new { @class = "control-label col-md-3" })
+                <div class="col-md-6">
+                    @Html.EditorFor(m => m.CustomerName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => m.CustomerName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.CustomerPhone, new { @class = "control-label col-md-3" })
+                <div class="col-md-6">
+                    @Html.EditorFor(m => m.CustomerPhone, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => m.CustomerPhone, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.CustomerEmail, new { @class = "control-label col-md-3" })
+                <div class="col-md-6">
+                    @Html.EditorFor(m => m.CustomerEmail, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => m.CustomerEmail, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.CustomerAddress, new { @class = "control-label col-md-3" })
+                <div class="col-md-6">
+                    @Html.EditorFor(m => m.CustomerAddress, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => m.CustomerAddress, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-3 col-md-6">
+                    <input type="submit" value="Cập nhật" class="btn btn-primary" />
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- ===== Phần Đổi mật khẩu ===== -->
+<div class="panel panel-default">
+    <div class="panel-heading"><strong>Đổi mật khẩu</strong></div>
+    <div class="panel-body">
+        @using (Html.BeginForm("ChangePassword", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-group">
+                <label class="control-label col-md-3">Mật khẩu cũ</label>
+                <div class="col-md-6">
+                    <input type="password" name="oldPassword" class="form-control" required />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-3">Mật khẩu mới</label>
+                <div class="col-md-6">
+                    <input type="password" name="newPassword" class="form-control" required />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-3">Xác nhận mật khẩu mới</label>
+                <div class="col-md-6">
+                    <input type="password" name="confirmPassword" class="form-control" required />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-3 col-md-6">
+                    <input type="submit" value="Đổi mật khẩu" class="btn btn-warning" />
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        (function () {
+            var view = document.getElementById("profileView");
+            var form = document.getElementById("profileForm");
+
+            document.getElementById("btnEdit").onclick = function () {
+                view.style.display = "none";
+                form.style.display = "block";
+            };
+            document.getElementById("btnCancel").onclick = function () {
+                form.style.display = "none";
+                view.style.display = "block";
+            };
+
+            // Kiểm tra form trước khi gửi (server vẫn kiểm tra lại)
+            form.onsubmit = function (e) {
+                var name = document.getElementById("pfName");
+                var phone = document.getElementById("pfPhone");
+                name.value = name.value.trim().replace(/\s+/g, " ");
+                phone.value = phone.value.trim();
+
+                var okName = name.value.length >= 2;
+                var okPhone = /^0\d{9}$/.test(phone.value);
+
+                document.getElementById("errName").textContent = okName ? "" : "Họ tên phải có ít nhất 2 ký tự.";
+                document.getElementById("errPhone").textContent = okPhone ? "" : "Số điện thoại gồm 10 số, bắt đầu bằng 0.";
+
+                if (!okName || !okPhone) e.preventDefault();
+            };
+        })();
+    </script>
+}

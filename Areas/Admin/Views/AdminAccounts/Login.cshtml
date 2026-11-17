@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewBag.Title = "Đăng nhập";
+    Layout = null;
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Đăng nhập quản trị</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body class="bg-info" style="padding-top: 100px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">ĐĂNG NHẬP HỆ THỐNG</h3>
+                    </div>
+                    <div class="panel-body">
+                        @using (Html.BeginForm("Login", "AdminAccounts", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            if (ViewBag.Error != null)
+                            {
+                                <div class="alert alert-danger">@ViewBag.Error</div>
+                            }
+
+                            <div class="form-group">
+                                <label>Tên đăng nhập</label>
+                                <input type="text" name="username" class="form-control" required />
+                            </div>
+                            <div class="form-group">
+                                <label>Mật khẩu</label>
+                                <input type="password" name="password" class="form-control" required />
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-block">Đăng nhập</button>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+﻿@model _25DH110083_My_Store.Models.Order
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 class="bg-success">CHI TIẾT ĐƠN HÀNG #@Model.OrderID</h2>
+
+<dl class="dl-horizontal">
+    <dt>Khách hàng</dt>
+    <dd>@Model.Customer.CustomerName</dd>
+
+    <dt>Ngày đặt</dt>
+    <dd>@Model.OrderDate.ToString("dd/MM/yyyy HH:mm")</dd>
+
+    <dt>Trạng thái</dt>
+    <dd>@Model.OrderStatus</dd>
+
+    <dt>Tổng tiền</dt>
+    <dd><strong style="color:red">@Model.OrderTotal.ToString("N0") VNĐ</strong></dd>
+</dl>
+
+<h4 class="bg-info">DANH SÁCH SẢN PHẨM TRONG ĐƠN</h4>
+<table class="table table-bordered">
+    <tr class="bg-success">
+        <th>Hình ảnh</th>
+        <th>Tên sản phẩm</th>
+        <th>Đơn giá</th>
+        <th>Số lượng</th>
+        <th>Thành tiền</th>
+    </tr>
+    @foreach (var detail in Model.OrderDetails)
+    {
+        <tr>
+            <td>
+                <img src="@Url.Content(detail.Product.ProductImage)" width="60" height="50" />
+            </td>
+            <td>@detail.Product.ProductName</td>
+            <td>@detail.UnitPrice.ToString("N0")</td>
+            <td>@detail.Quantity</td>
+            <td>@((detail.Quantity * detail.UnitPrice).ToString("N0"))</td>
+        </tr>
+    }
+</table>
+
+<p>
+    @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-primary" })
+</p>

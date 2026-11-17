@@ -1,0 +1,50 @@
+﻿
+@model _25DH110083_My_Store.Models.ViewModel.PersonalMenuVM
+
+<ul class="nav navbar-nav navbar-right">
+
+    <!-- Trang chủ -->
+    <li>
+        <a href="@Url.Action("Index", "Home")">
+            <span class="glyphicon glyphicon-home"></span> Trang chủ
+        </a>
+    </li>
+
+    <!-- Tài khoản: dropdown -->
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            <span class="glyphicon glyphicon-user"></span>
+            @if (Model.IsLoggedIn)
+            {
+                <text>Hello, @Model.Username</text>
+            }
+            else
+            {
+                <text>Tài khoản</text>
+            }
+            <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            @if (Model.IsLoggedIn)
+            {
+                <li><a href="@Url.Action("ProfileInfo", "Account")">Thông tin tài khoản</a></li>
+                <li><a href="@Url.Action("MyOrder", "Order")">Lịch sử mua hàng</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="@Url.Action("Logout", "Account")">Đăng xuất</a></li>
+            }
+            else
+            {
+                <li><a href="@Url.Action("Register", "Account")">Đăng ký</a></li>
+                <li><a href="@Url.Action("Login", "Account")">Đăng nhập</a></li>
+            }
+        </ul>
+    </li>
+
+    <!-- Giỏ hàng: hiển thị số mặt hàng trong giỏ -->
+    <li>
+        <a href="@Url.Action("Index2", "Cart")">
+            <span class="glyphicon glyphicon-shopping-cart"></span>
+            Giỏ hàng <span class="badge" id="cart-count">@Model.CartCount</span>
+        </a>
+    </li>
+</ul>

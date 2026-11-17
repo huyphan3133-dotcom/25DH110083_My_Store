@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - TRANG QUẢN TRỊ</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("My Store Admin", "Home", "Admin",
+                 new { area = "Admin" },
+                 new { @class = "navbar-brand" })   
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>
+                        @Html.ActionLink("Trang chủ", "Home", "Admin",
+                            new { area = "Admin" }, null)
+                    </li>
+                    <li>@Html.ActionLink("Danh mục", "Index", "Categories", new { area = "Admin" }, null)</li>
+                    <li>@Html.ActionLink("Sản phẩm", "Index", "Products", new { area = "Admin" }, null)</li>
+                    <li>@Html.ActionLink("Khách hàng", "Index", "Customers", new { area = "Admin" }, null)</li>
+                    <li>@Html.ActionLink("Đơn hàng", "Index", "Orders", new { area = "Admin" }, null)</li>
+                    <li>@Html.ActionLink("Tài khoản", "Index", "AdminAccounts", new { area = "Admin" }, null)</li>
+                </ul>
+
+                <!-- PHẦN THÊM MỚI: HIỂN THỊ TÊN ADMIN & NÚT ĐĂNG XUẤT -->
+                <ul class="nav navbar-nav navbar-right">
+                    @if (Session["AdminName"] != null)
+                    {
+                        <li>
+                            <a href="#" style="color: yellow;">
+                                <span class="glyphicon glyphicon-user"></span> Xin chào, @Session["AdminName"]
+                            </a>
+                        </li>
+                        <li>
+                            @Html.ActionLink("Đăng xuất", "Logout", "AdminAccounts", new { area = "Admin" }, new { style = "color: red;" })
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            @Html.ActionLink("Đăng nhập", "Login", "AdminAccounts", new { area = "Admin" }, null)
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container body-content" style="margin-top: 70px;">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - ELLA</p>
+            <p><strong>Contact</strong></p>
+            <p>Phan Nhật Huy</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

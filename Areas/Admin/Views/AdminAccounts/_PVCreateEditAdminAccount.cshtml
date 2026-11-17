@@ -1,0 +1,40 @@
+﻿@model _25DH110083_My_Store.Models.AdminAccount
+
+<div class="form-group">
+    <div class="control-label col-md-2">Tên đăng nhập</div>
+    <div class="col-md-10">
+        @Html.EditorFor(m => m.AdminName, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(m => m.AdminName, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="control-label col-md-2">Mật khẩu</div>
+    <div class="col-md-10">
+        @Html.PasswordFor(m => m.AdminPassword, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.AdminPassword, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="control-label col-md-2">Email</div>
+    <div class="col-md-10">
+        @Html.EditorFor(m => m.AdminEmail, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(m => m.AdminEmail, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="control-label col-md-2">Quyền hạn</div>
+    <div class="col-md-10">
+        @Html.EditorFor(m => m.AdminRole, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(m => m.AdminRole, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <input type="submit" value="Lưu" class="btn btn-primary" />
+        @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-primary" })
+    </div>
+</div>
